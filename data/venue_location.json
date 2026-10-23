@@ -1,0 +1,10 @@
+{
+  "name": "RSIA Az Zahra - Ruang Diklat",
+  "address": "Jalan Brigjen Hasan Kasim, RT.34, Sako, Palembang (Koordinat: -2.942275, 104.784318)",
+  "latitude": -2.942275,
+  "longitude": 104.784318,
+  "radiusMeters": 100,
+  "diameterMeters": 200,
+  "updatedAt": 1759471880000,
+  "source": "official_geofence"
+}

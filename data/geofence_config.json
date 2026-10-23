@@ -1,0 +1,26 @@
+{
+  "enabled": true,
+  "enforceStrict": false,
+  "locations": [
+    {
+      "id": "loc-rsia-titik-1",
+      "name": "RSIA Az Zahra - Titik 1 (Ruang Diklat)",
+      "description": "Ruang Diklat RSIA Az Zahra, Jalan Brigjen Hasan Kasim, RT.34, Sako, Palembang (Koordinat: -2.942275, 104.784318)",
+      "latitude": -2.942275,
+      "longitude": 104.784318,
+      "radiusMeters": 100,
+      "diameterMeters": 200,
+      "isActive": true
+    },
+    {
+      "id": "loc-rsia-titik-2",
+      "name": "RSIA Az Zahra - Titik 2 (Area Diklat)",
+      "description": "Area Diklat RSIA Az Zahra, Jalan Brigjen Hasan Kasim, RT.34, Sako, Palembang (Koordinat: -2.942191, 104.785131)",
+      "latitude": -2.942191438337654,
+      "longitude": 104.78513129074992,
+      "radiusMeters": 100,
+      "diameterMeters": 200,
+      "isActive": true
+    }
+  ]
+}

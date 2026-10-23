@@ -1,0 +1,15 @@
+{
+  "logoUrl": null,
+  "institutionName": "Diklat & Pelatihan",
+  "width": 200,
+  "height": 48,
+  "shape": "landscape",
+  "objectFit": "contain",
+  "altText": "Logo Diklat & Pelatihan",
+  "showInKiosk": false,
+  "showInSidebar": false,
+  "showInBadge": false,
+  "showInHeader": false,
+  "showInDataView": false,
+  "showInScanner": false
+}

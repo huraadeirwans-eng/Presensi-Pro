@@ -1,0 +1,46 @@
+[
+  {
+    "id": "diklat-bhd-code-blue",
+    "title": "Diklat Bantuan Hidup Dasar (BHD) & Code Blue",
+    "organization": "Diklat & Pelatihan",
+    "description": "Pelatihan wajib resusitasi jantung paru dan penanganan kegawatdaruratan",
+    "date": "2026-10-19",
+    "startTime": "08:00",
+    "endTime": "12:00",
+    "requireLocation": true,
+    "qrCodePayload": "{\"type\":\"PRESENSI_QR_EVENT\",\"eventId\":\"diklat-bhd-code-blue\",\"title\":\"Diklat Bantuan Hidup Dasar (BHD) & Code Blue\",\"token\":\"DIKLAT_BHD_TOKEN_2026\"}"
+  },
+  {
+    "id": "diklat-ppi-infeksi",
+    "title": "Pelatihan Pencegahan & Pengendalian Infeksi (PPI)",
+    "organization": "Diklat & Pelatihan",
+    "description": "Kepatuhan kebersihan tangan, APD, dan pencegahan infeksi nosokomial",
+    "date": "2026-10-19",
+    "startTime": "13:00",
+    "endTime": "16:00",
+    "requireLocation": true,
+    "qrCodePayload": "{\"type\":\"PRESENSI_QR_EVENT\",\"eventId\":\"diklat-ppi-infeksi\",\"title\":\"Pelatihan Pencegahan & Pengendalian Infeksi (PPI)\",\"token\":\"DIKLAT_PPI_TOKEN_2026\"}"
+  },
+  {
+    "id": "diklat-patient-safety",
+    "title": "Diklat Keselamatan Pasien (Patient Safety)",
+    "organization": "Diklat & Pelatihan",
+    "description": "Sasaran keselamatan pasien, manajemen risiko dan pelaporan insiden",
+    "date": "2026-10-19",
+    "startTime": "08:30",
+    "endTime": "11:30",
+    "requireLocation": true,
+    "qrCodePayload": "{\"type\":\"PRESENSI_QR_EVENT\",\"eventId\":\"diklat-patient-safety\",\"title\":\"Diklat Keselamatan Pasien (Patient Safety)\",\"token\":\"DIKLAT_SAFETY_TOKEN_2026\"}"
+  },
+  {
+    "id": "diklat-k3rs-apar",
+    "title": "Pelatihan K3RS & Simulasi Kebakaran (APAR)",
+    "organization": "Diklat & Pelatihan",
+    "description": "Penggunaan alat pemadam api ringan dan evakuasi tanggap darurat",
+    "date": "2026-10-19",
+    "startTime": "09:00",
+    "endTime": "12:00",
+    "requireLocation": true,
+    "qrCodePayload": "{\"type\":\"PRESENSI_QR_EVENT\",\"eventId\":\"diklat-k3rs-apar\",\"title\":\"Pelatihan K3RS & Simulasi Kebakaran (APAR)\",\"token\":\"DIKLAT_K3RS_TOKEN_2026\"}"
+  }
+]

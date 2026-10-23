@@ -1,0 +1,129 @@
+{
+  "entities": {
+    "attendance": {
+      "title": "Attendance Record",
+      "description": "Presensi record submitted by a participant or admin",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "name": { "type": "string", "maxLength": 150 },
+        "nik": { "type": "string", "maxLength": 50 },
+        "unitKerja": { "type": "string", "maxLength": 100 },
+        "eventName": { "type": "string", "maxLength": 200 },
+        "eventId": { "type": "string", "maxLength": 128 },
+        "timestamp": { "type": "string", "maxLength": 100 },
+        "status": { "type": "string", "maxLength": 50 },
+        "keterangan": { "type": "string", "maxLength": 200 },
+        "latitude": { "type": "number" },
+        "longitude": { "type": "number" },
+        "accuracy": { "type": "number" },
+        "address": { "type": "string", "maxLength": 300 },
+        "mapsUrl": { "type": "string", "maxLength": 500 },
+        "device": { "type": "string", "maxLength": 100 },
+        "syncedToSheets": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "name", "nik", "timestamp", "status"]
+    },
+    "event": {
+      "title": "Diklat Event Session",
+      "description": "Diklat or training event session definition",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "title": { "type": "string", "maxLength": 200 },
+        "organization": { "type": "string", "maxLength": 150 },
+        "date": { "type": "string", "maxLength": 50 },
+        "startTime": { "type": "string", "maxLength": 20 },
+        "endTime": { "type": "string", "maxLength": 20 },
+        "speaker": { "type": "string", "maxLength": 150 },
+        "location": { "type": "string", "maxLength": 200 },
+        "isActive": { "type": "boolean" },
+        "isDefault": { "type": "boolean" },
+        "code": { "type": "string", "maxLength": 100 }
+      },
+      "required": ["id", "title"]
+    },
+    "geofence": {
+      "title": "Geofence Location",
+      "description": "Geofence coordinates and radius for attendance verification",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "name": { "type": "string", "maxLength": 150 },
+        "description": { "type": "string", "maxLength": 300 },
+        "latitude": { "type": "number" },
+        "longitude": { "type": "number" },
+        "radiusMeters": { "type": "number" },
+        "isActive": { "type": "boolean" },
+        "address": { "type": "string", "maxLength": 300 }
+      },
+      "required": ["id", "name", "latitude", "longitude", "radiusMeters"]
+    },
+    "systemConfig": {
+      "title": "System Configuration",
+      "description": "Global settings for admin webhook and syncing",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "webhookUrl": { "type": "string", "maxLength": 500 },
+        "sheetUrl": { "type": "string", "maxLength": 500 },
+        "spreadsheetId": { "type": "string", "maxLength": 200 },
+        "lastSyncedAt": { "type": "string", "maxLength": 100 }
+      },
+      "required": ["id"]
+    },
+    "adminUser": {
+      "title": "Admin User",
+      "description": "Administrator account with email and password or Google auth",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "email": { "type": "string", "maxLength": 150 },
+        "name": { "type": "string", "maxLength": 150 },
+        "role": { "type": "string", "maxLength": 50 },
+        "authType": { "type": "string", "maxLength": 50 },
+        "createdAt": { "type": "string", "maxLength": 100 },
+        "isActive": { "type": "boolean" }
+      },
+      "required": ["id", "email", "role"]
+    },
+    "deletedRecord": {
+      "title": "Deleted Record Tombstone",
+      "description": "Records deleted document IDs so deleted attendance records never return",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "deletedAt": { "type": "string", "maxLength": 100 }
+      },
+      "required": ["id"]
+    }
+  },
+  "firestore": {
+    "/diklat_attendance/{attendanceId}": {
+      "schema": "attendance",
+      "description": "Attendance logs synchronized in real-time between devices"
+    },
+    "/diklat_deleted_ids/{docId}": {
+      "schema": "deletedRecord",
+      "description": "Deleted attendance IDs to prevent ghost restoration"
+    },
+    "/diklat_events/{eventId}": {
+      "schema": "event",
+      "description": "Diklat events synchronized in real-time"
+    },
+    "/diklat_geofence_locations/{locationId}": {
+      "schema": "geofence",
+      "description": "Geofence locations synchronized in real-time"
+    },
+    "/diklat_system_config/{configId}": {
+      "schema": "systemConfig",
+      "description": "Application settings and webhook configuration"
+    },
+    "/diklat_admin_users/{adminId}": {
+      "schema": "adminUser",
+      "description": "Administrator accounts synchronized in real-time"
+    }
+  }
+}

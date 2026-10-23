@@ -1,0 +1,164 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Default deny all access
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-@.]+$');
+    }
+
+    // Health check test connection document
+    match /test/connection {
+      allow read: if true;
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isBootstrappedAdmin() {
+      return isSignedIn() &&
+        (request.auth.token.email == 'rawatinap.rsiaazahra@gmail.com' ||
+         request.auth.token.email == 'triseptak92@gmail.com' ||
+         request.auth.token.email == 'adeirwanh4@gmail.com' ||
+         request.auth.token.email == 'huraadeirwans@gmail.com');
+    }
+
+    function isValidAttendance(data) {
+      return data.keys().hasAll(['id', 'name', 'timestamp', 'status']) &&
+        data.id is string && data.id.size() <= 128 &&
+        data.name is string && data.name.size() > 0 && data.name.size() <= 150 &&
+        data.timestamp is string && data.timestamp.size() <= 100 &&
+        data.status is string && data.status.size() <= 50 &&
+        (!('nik' in data) || (data.nik is string && data.nik.size() <= 50)) &&
+        (!('identityNumber' in data) || (data.identityNumber is string && data.identityNumber.size() <= 50)) &&
+        (!('unitKerja' in data) || (data.unitKerja is string && data.unitKerja.size() <= 100)) &&
+        (!('department' in data) || (data.department is string && data.department.size() <= 100)) &&
+        (!('eventName' in data) || (data.eventName is string && data.eventName.size() <= 200)) &&
+        (!('eventId' in data) || (data.eventId is string && data.eventId.size() <= 128)) &&
+        (!('keterangan' in data) || (data.keterangan is string && data.keterangan.size() <= 200)) &&
+        (!('address' in data) || (data.address is string && data.address.size() <= 1000)) &&
+        (!('mapsUrl' in data) || (data.mapsUrl is string && data.mapsUrl.size() <= 1000)) &&
+        (!('device' in data) || (data.device is string && data.device.size() <= 100)) &&
+        (!('deviceInfo' in data) || (data.deviceInfo is string && data.deviceInfo.size() <= 100)) &&
+        (!('profession' in data) || (data.profession is string && data.profession.size() <= 100)) &&
+        (!('profesi' in data) || (data.profesi is string && data.profesi.size() <= 100)) &&
+        (!('trainingDate' in data) || (data.trainingDate is string && data.trainingDate.size() <= 50)) &&
+        (!('tanggalPelatihan' in data) || (data.tanggalPelatihan is string && data.tanggalPelatihan.size() <= 50)) &&
+        (!('entryTime' in data) || (data.entryTime is string && data.entryTime.size() <= 50)) &&
+        (!('jamMasuk' in data) || (data.jamMasuk is string && data.jamMasuk.size() <= 50)) &&
+        (!('targetStartTime' in data) || (data.targetStartTime is string && data.targetStartTime.size() <= 50)) &&
+        (!('email' in data) || (data.email is string && data.email.size() <= 150)) &&
+        (!('latitude' in data) || data.latitude is number) &&
+        (!('longitude' in data) || data.longitude is number) &&
+        (!('accuracy' in data) || data.accuracy is number) &&
+        (!('syncedToSheets' in data) || data.syncedToSheets is bool) &&
+        (!('isOfflinePending' in data) || data.isOfflinePending is bool);
+    }
+
+    function isValidEvent(data) {
+      return data.keys().hasAll(['id', 'title']) &&
+        data.id is string && data.id.size() <= 128 &&
+        data.title is string && data.title.size() > 0 && data.title.size() <= 200 &&
+        (!('organization' in data) || (data.organization is string && data.organization.size() <= 150)) &&
+        (!('date' in data) || (data.date is string && data.date.size() <= 50)) &&
+        (!('startTime' in data) || (data.startTime is string && data.startTime.size() <= 20)) &&
+        (!('endTime' in data) || (data.endTime is string && data.endTime.size() <= 20)) &&
+        (!('speaker' in data) || (data.speaker is string && data.speaker.size() <= 150)) &&
+        (!('location' in data) || (data.location is string && data.location.size() <= 200)) &&
+        (!('isActive' in data) || data.isActive is bool) &&
+        (!('isDefault' in data) || data.isDefault is bool) &&
+        (!('code' in data) || (data.code is string && data.code.size() <= 100));
+    }
+
+    function isValidGeofence(data) {
+      return data.keys().hasAll(['id', 'name', 'latitude', 'longitude', 'radiusMeters']) &&
+        data.id is string && data.id.size() <= 128 &&
+        data.name is string && data.name.size() > 0 && data.name.size() <= 150 &&
+        data.latitude is number &&
+        data.longitude is number &&
+        data.radiusMeters is number && data.radiusMeters > 0 && data.radiusMeters <= 50000 &&
+        (!('isActive' in data) || data.isActive is bool) &&
+        (!('address' in data) || (data.address is string && data.address.size() <= 300)) &&
+        (!('description' in data) || (data.description is string && data.description.size() <= 300));
+    }
+
+    // Diklat Attendance collection: read & record presensi
+    match /diklat_attendance/{attendanceId} {
+      allow read: if true;
+      allow create: if isValidId(attendanceId) && isValidAttendance(incoming());
+      allow update: if isValidId(attendanceId) && isValidAttendance(incoming());
+      allow delete: if isValidId(attendanceId);
+    }
+
+    // Diklat Deleted Record IDs (Tombstones so deleted attendance never returns)
+    match /diklat_deleted_ids/{docId} {
+      allow read: if true;
+      allow create, update, delete: if isValidId(docId);
+    }
+
+    // Diklat Events collection: read for participants, write for admin/staff
+    match /diklat_events/{eventId} {
+      allow read: if true;
+      allow create, update: if isValidId(eventId) && isValidEvent(incoming());
+      allow delete: if isValidId(eventId);
+    }
+
+    // Diklat Geofence locations collection
+    match /diklat_geofence_locations/{locationId} {
+      allow read: if true;
+      allow create, update: if isValidId(locationId) && isValidGeofence(incoming());
+      allow delete: if isValidId(locationId);
+    }
+
+    // Diklat System config collection (Admin settings & Sheets Webhook)
+    match /diklat_system_config/{configId} {
+      allow read: if true;
+      allow write: if isValidId(configId);
+    }
+
+    // Diklat Admin users collection (Kelola akun admin email/password)
+    match /diklat_admin_users/{adminId} {
+      allow read, write: if true;
+    }
+
+    // Legacy fallback match blocks
+    match /attendance/{attendanceId} {
+      allow read: if true;
+      allow create: if isValidId(attendanceId) && isValidAttendance(incoming());
+      allow update: if isValidId(attendanceId) && isValidAttendance(incoming());
+      allow delete: if isValidId(attendanceId);
+    }
+
+    match /events/{eventId} {
+      allow read: if true;
+      allow create, update: if isValidId(eventId) && isValidEvent(incoming());
+      allow delete: if isValidId(eventId);
+    }
+
+    match /geofence_locations/{locationId} {
+      allow read: if true;
+      allow create, update: if isValidId(locationId) && isValidGeofence(incoming());
+      allow delete: if isValidId(locationId);
+    }
+
+    match /system_config/{configId} {
+      allow read: if true;
+      allow write: if isValidId(configId);
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "name": "PresensiQR Pro - Absensi Online \u0026 Geolocation",
+  "description": "Aplikasi absensi online profesional dengan scan QR code, deteksi lokasi otomatis GPS, dan integrasi langsung ke Google Spreadsheet.",
+  "requestFramePermissions": [
+    "geolocation",
+    "camera"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

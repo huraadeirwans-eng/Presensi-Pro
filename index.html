@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PresensiQR Pro - Absensi Online & Geolocation</title>
+    <meta name="description" content="Aplikasi absensi online profesional dengan scan QR code, deteksi lokasi otomatis GPS, dan integrasi langsung ke Google Spreadsheet." />
+    <meta property="og:title" content="PresensiQR Pro - Absensi Online & Geolocation" />
+    <meta property="og:description" content="Aplikasi absensi online profesional dengan scan QR code, deteksi lokasi otomatis GPS, dan integrasi langsung ke Google Spreadsheet." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script>
+      // Suppress benign Vite HMR / WebSocket connection errors in dev iframe per AI Studio guidelines
+      window.addEventListener('error', function(e) {
+        if (
+          e &&
+          (e.message?.includes?.('WebSocket') ||
+           e.filename?.includes?.('@vite/client') ||
+           e.message?.includes?.('createWebSocketModuleRunnerTransport'))
+        ) {
+          e.preventDefault?.();
+          e.stopImmediatePropagation?.();
+          return true;
+        }
+      }, true);
+      window.addEventListener('unhandledrejection', function(e) {
+        var reason = String(e?.reason?.message || e?.reason || '');
+        if (reason.includes('WebSocket') || reason.includes('@vite/client')) {
+          e.preventDefault?.();
+          e.stopImmediatePropagation?.();
+          return true;
+        }
+      }, true);
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+

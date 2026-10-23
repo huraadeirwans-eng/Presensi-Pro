@@ -1,0 +1,35 @@
+{
+  "updatedAt": 1792747360424,
+  "adminPassword": "admin123",
+  "adminUsers": [
+    {
+      "id": "admin_root_4",
+      "email": "adeirwanh4@gmail.com",
+      "name": "Ade Irwan",
+      "role": "Super Admin",
+      "authType": "both",
+      "password": "admin123",
+      "createdAt": "2026-03-01T08:00:00.000Z",
+      "isActive": true
+    },
+    {
+      "id": "admin_root_2",
+      "email": "rawatinap.rsiaazahra@gmail.com",
+      "name": "Admin Rawat Inap RSIA AZ ZAHRA",
+      "role": "Super Admin",
+      "authType": "google",
+      "createdAt": "2026-03-01T08:00:00.000Z",
+      "isActive": true,
+      "password": "admin123"
+    },
+    {
+      "id": "admin_root_3",
+      "email": "triseptak92@gmail.com",
+      "name": "Tri Septa",
+      "role": "Admin Diklat",
+      "authType": "google",
+      "createdAt": "2026-03-01T08:00:00.000Z",
+      "isActive": true
+    }
+  ]
+}
